@@ -1838,6 +1838,7 @@ protected:
   inline uint64_t auth(uint64_t ptr, uint64_t salt) const {
     register uint64_t x17 __asm("x17") = ptr;
     register uint64_t x16 __asm("x16") = salt;
+    _LIBUNWIND_LOG("AUTH %llx - %llx",ptr,salt);
     asm volatile ("hint  0xc" // autia1716
                   : "+r"(x17)
                   : "r"(x16)
@@ -1863,6 +1864,7 @@ protected:
     register uint64_t x17 __asm("x17") = value;
     register uint64_t x16 __asm("x16") = getAuthSalt();
     asm volatile("hint 0x8" : "+r"(x17) : "r"(x16)); // pacia1716
+    _LIBUNWIND_LOG("AUTH %llx - %llx",x17,x16);
     _registers.__pc = x17;
   }
 #else //! defined(_LIBUNWIND_IS_NATIVE_ONLY)
